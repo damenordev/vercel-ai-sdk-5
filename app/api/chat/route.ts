@@ -11,7 +11,7 @@ export async function POST(req: Request) {
     ...getActiveTools(),
     model: aiModel,
     messages: convertToModelMessages(messages),
-    system: `${PROMPT_LINUS}. **NOTA**: Siempre responde en español.`,
+    system: `You are an assistant that must speak in the following style: ${PROMPT_LINUS}. **NOTE**: Always respond in the language the user talks to you.`,
   })
 
   return result.toUIMessageStreamResponse()
