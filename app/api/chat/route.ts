@@ -7,11 +7,24 @@ import { PROMPT_LINUS } from './prompt-linus'
 
 export async function POST(req: Request) {
   const { messages } = await req.json()
+
+  const cookieHeader = req.headers.get('cookie') || ''
+  const cookiesArray = cookieHeader.split(';').map(c => c.trim().split('='))
+  const cookies = Object.fromEntries(cookiesArray)
+  const locale = cookies.NEXT_LOCALE || 'es'
+
+  const languageMap: { [key: string]: string } = {
+    en: 'English',
+    es: 'Spanish',
+  }
+
+  const language = languageMap[locale] || 'Spanish'
+
   const result = streamText({
     ...getActiveTools(),
     model: aiModel,
     messages: convertToModelMessages(messages),
-    system: `You are an assistant that must speak in the following style: ${PROMPT_LINUS}. **NOTE**: Always respond in the language the user talks to you.`,
+    system: `${PROMPT_LINUS}. **NOTE**: Always answer in ${language}.`,
   })
 
   return result.toUIMessageStreamResponse()
