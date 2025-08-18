@@ -3,7 +3,7 @@ import { z } from 'zod'
 
 export const getReasonConsultation = tool({
   description: 'Motivos de consulta para la cita (getReasonConsultation)',
-  parameters: z.object({}).describe('Motivos de consulta para la cita'),
+  inputSchema: z.object({}).describe('Motivos de consulta para la cita'),
   execute: async () => [
     {
       id: 30,

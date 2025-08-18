@@ -1,4 +1,4 @@
-import type { UIMessage } from 'ai'
+import type { UIMessage } from '@ai-sdk/react'
 import ReactMarkdown from 'react-markdown'
 
 import { cn } from '@/utils'
@@ -18,7 +18,12 @@ export const ChatBubbleMessage: React.FC<IChatBubbleMessageProps> = ({ message }
           'bg-primary text-primary-foreground px-1.5 py-0.5 rounded-lg': message.role === 'user',
         })}
       >
-        <ReactMarkdown>{message.content}</ReactMarkdown>
+        <ReactMarkdown>
+          {message.parts
+            ?.filter(part => part.type === 'text')
+            .map(part => part.text)
+            .join('') || ''}
+        </ReactMarkdown>
       </div>
     </div>
   )

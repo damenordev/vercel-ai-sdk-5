@@ -1,4 +1,4 @@
-import type { ToolInvocation } from 'ai'
+import type { UIMessage } from '@ai-sdk/react'
 
 import { getTimeNowTool, TimeNowMessage } from './get-time-now'
 import { getReasonConsultation, ReasonsMessage } from './get-reasons'
@@ -9,14 +9,20 @@ const toolsComponents = {
 }
 
 export const getActiveTools = () => {
-  const experimental_activeTools = Object.keys(toolsComponents) as (keyof typeof toolsComponents)[]
-  const activeTools = Object.fromEntries(experimental_activeTools.map(tool => [tool, toolsComponents[tool].handler]))
-  return { experimental_activeTools, tools: activeTools }
+  const tools = Object.fromEntries(Object.entries(toolsComponents).map(([key, value]) => [key, value.handler]))
+  return { tools }
 }
 
-export const renderToolInvocation = (toolInvocation: ToolInvocation) => {
-  if (toolInvocation.state !== 'result') return null
-  const key = toolInvocation.toolCallId
-  if (toolInvocation.toolName === 'getTimeNow') return <TimeNowMessage key={key} timeStart={toolInvocation.result} />
-  if (toolInvocation.toolName === 'getReasons') return <ReasonsMessage key={key} reasons={toolInvocation.result} />
+export const renderToolPart = (part: any, messageId: string, partIndex: number) => {
+  const key = `${messageId}-${partIndex}`
+
+  if (part.type === 'tool-getTimeNow' && part.state === 'output-available') {
+    return <TimeNowMessage key={key} timeStart={part.output} />
+  }
+
+  if (part.type === 'tool-getReasons' && part.state === 'output-available') {
+    return <ReasonsMessage key={key} reasons={part.output} />
+  }
+
+  return null
 }

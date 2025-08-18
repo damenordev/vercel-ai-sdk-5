@@ -20,7 +20,7 @@ export default async function RootLayout({ children }: ILayout) {
   const locale = await getLocale()
 
   return (
-    <html lang={locale} className={`${geist.variable}`}>
+    <html lang={locale} className={`${geist.variable}`} suppressHydrationWarning>
       <body>
         <ThemeProvider
           attribute="class"

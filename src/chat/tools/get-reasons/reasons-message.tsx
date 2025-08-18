@@ -16,15 +16,13 @@ export interface IReasonsMessageProps {
 
 export const ReasonsMessage: React.FC<IReasonsMessageProps> = ({ reasons }) => {
   const [selectedReasonId, setSelectedReasonId] = useState<number | null>(null)
-  const { append } = useChatContext()
+  const { sendMessage } = useChatContext()
 
   const handleReasonClick = (reason: IReasonsMessageProps['reasons'][number]) => {
     if (selectedReasonId === null) {
       setSelectedReasonId(reason.id)
-      void append({
-        id: crypto.randomUUID(),
-        role: 'user',
-        content: `He seleccionado: ${reason.description}`,
+      sendMessage({
+        text: `He seleccionado: ${reason.description}`,
       })
     }
   }

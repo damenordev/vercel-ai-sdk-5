@@ -1,39 +1,53 @@
 'use client'
-import type { UIMessage } from 'ai'
-import { createContext, use } from 'react'
+import type { UIMessage } from '@ai-sdk/react'
+import { createContext, use, useState } from 'react'
 import { useChat } from '@ai-sdk/react'
 
 export interface IChatContext {
   messages: UIMessage[]
-  isLoading: boolean
   input: string
-  handleInputChange: ReturnType<typeof useChat>['handleInputChange']
-  handleSubmit: ReturnType<typeof useChat>['handleSubmit']
+  setInput: (input: string) => void
+  sendMessage: ReturnType<typeof useChat>['sendMessage']
   stop: ReturnType<typeof useChat>['stop']
   status: ReturnType<typeof useChat>['status']
-  append: ReturnType<typeof useChat>['append']
+  handleInputChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void
+  handleSubmit: (e: React.FormEvent) => void
 }
 
 const ChatContext = createContext({} as IChatContext)
 
 export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
-  const { messages, isLoading, input, handleInputChange, handleSubmit, stop, status, append } = useChat({
+  const [input, setInput] = useState('')
+  
+  const { messages, sendMessage, stop, status } = useChat({
     onError: error => {
       console.error('Error al enviar el mensaje:', error)
     },
   })
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setInput(e.target.value)
+  }
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (input.trim()) {
+      sendMessage({ text: input })
+      setInput('')
+    }
+  }
+
   return (
     <ChatContext.Provider
       value={{
         messages,
-        isLoading,
         input,
-        handleInputChange,
-        handleSubmit,
+        setInput,
+        sendMessage,
         stop,
         status,
-        append,
+        handleInputChange,
+        handleSubmit,
       }}
     >
       {children}

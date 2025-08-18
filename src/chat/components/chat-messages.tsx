@@ -1,24 +1,26 @@
 'use client'
-import type { UIMessage } from 'ai'
+import type { UIMessage } from '@ai-sdk/react'
 import { Fragment, useEffect, useRef } from 'react'
 
 import { ChatBubbleMessage } from './chat-bubble-message'
 import { useChatContext } from '../provider'
-import { renderToolInvocation } from '../tools'
+import { renderToolPart } from '../tools'
 
 const renderMessage = (message: UIMessage) => {
   if (message.parts && message.parts.length > 0) {
-    return message.parts.map(part => {
-      if (part.type === 'step-start') return
-      if (part.type === 'text') return <ChatBubbleMessage key={message.id} message={message} />
-      if (part.type === 'tool-invocation') return renderToolInvocation(part.toolInvocation)
+    return message.parts.map((part, index) => {
+      if (part.type === 'step-start') return null
+      if (part.type === 'text') return <ChatBubbleMessage key={`${message.id}-text`} message={message} />
+      if (part.type.startsWith('tool-')) return renderToolPart(part, message.id, index)
       return null
     })
   }
+  return null
 }
 
 export const ChatMessages = () => {
-  const { messages, isLoading } = useChatContext()
+  const { messages, status } = useChatContext()
+  const isLoading = status === 'submitted' || status === 'streaming'
 
   const endRef = useRef<HTMLDivElement>(null)
 
@@ -30,7 +32,7 @@ export const ChatMessages = () => {
         inline: 'nearest',
       })
     }
-  }, [messages, isLoading])
+  }, [messages, status])
 
   return (
     <div className="space-y-2 flex-1 overflow-y-auto px-4 pt-4">

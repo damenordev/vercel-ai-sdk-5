@@ -14,10 +14,12 @@ export default async function HomePage() {
           <SettingsDialog />
         </div>
       </header>
-      <main className="flex-1">
+      <main className="flex-1 ">
         <ChatProvider>
-          <ChatMessages />
-          <ChatInput />
+          <div className="h-[calc(100vh-100px)] overflow-hidden flex flex-col pb-2 max-w-5xl mx-auto p-1 bg-muted/20 rounded-2xl">
+            <ChatMessages />
+            <ChatInput />
+          </div>
         </ChatProvider>
       </main>
       <footer className="pb-1 pt-2">

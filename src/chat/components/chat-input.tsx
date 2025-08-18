@@ -8,8 +8,9 @@ import { cn } from '@/utils'
 import { useChatContext } from '../provider'
 
 export const ChatInput = () => {
-  const { messages, isLoading, input, handleInputChange, handleSubmit, stop, status } = useChatContext()
+  const { messages, input, handleInputChange, handleSubmit, stop, status } = useChatContext()
   const textareaRef = useRef<HTMLTextAreaElement>(null)
+  const isLoading = status === 'submitted' || status === 'streaming'
 
   useEffect(() => {
     if (isLoading || messages.length === 0) return
