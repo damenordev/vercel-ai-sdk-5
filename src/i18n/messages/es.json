@@ -1,0 +1,16 @@
+{
+  "home": "Inicio",
+  "settingsDialog": {
+    "title": "Apariencia",
+    "description": "Personaliza la apariencia de la aplicación. Cambia entre el modo claro y oscuro.",
+    "language": {
+      "title": "Idioma"
+    },
+    "theme": {
+      "title": "Tema",
+      "light": "Claro",
+      "dark": "Oscuro",
+      "system": "Sistema"
+    }
+  }
+}

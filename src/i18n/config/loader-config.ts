@@ -14,6 +14,7 @@ export interface II18nConfig {
   failSilently: boolean
   enableLogging: boolean
   modules: Ti18nModuleName[]
+  common?: Ti18nModuleName
 }
 
 /**
@@ -38,6 +39,7 @@ export interface II18nConfig {
 export const i18nConfig: II18nConfig = {
   failSilently: true,
   // enableLogging: process.env.NODE_ENV !== 'production',
-  enableLogging: false,
-  modules: ['i18n'],
+  enableLogging: true,
+  modules: [],
+  common: 'i18n',
 } as const

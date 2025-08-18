@@ -34,10 +34,9 @@ const mergeInto = (target: Ti18nMessages, source: Ti18nMessages): void => {
  * Devuelve pares `{ moduleName, loader }` para su ejecución en paralelo.
  */
 const buildModuleLoaders = () => {
-  return i18nConfig.modules.map(moduleName => ({
-    moduleName,
-    loader: createModuleLoader(moduleName),
-  }))
+  const allModules = [...i18nConfig.modules]
+  if (i18nConfig.common) allModules.push(i18nConfig.common)
+  return allModules.map(moduleName => ({ moduleName, loader: createModuleLoader(moduleName) }))
 }
 
 /**

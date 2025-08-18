@@ -1,0 +1,16 @@
+{
+  "home": "Home",
+  "settingsDialog": {
+    "title": "Appearance",
+    "description": "Customize the appearance of the app. Switch between light and dark mode.",
+    "language": {
+      "title": "Language"
+    },
+    "theme": {
+      "title": "Theme",
+      "light": "Light",
+      "dark": "Dark",
+      "system": "System"
+    }
+  }
+}

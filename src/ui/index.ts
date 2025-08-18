@@ -1,4 +1,7 @@
 export * from './button'
 export * from './dialog'
+export * from './label'
+export * from './radio-group'
 export * from './select'
 export * from './sonner'
+export * from './textarea'

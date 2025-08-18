@@ -19,7 +19,14 @@ export const createModuleLoader = (moduleName: Ti18nModuleName): Ti18nMessageLoa
     try {
       const rawMessages: Ti18nMessages = (await import(`../../${moduleName}/messages/${locale}.json`)).default
 
+      // Si el módulo es el común, no se le aplica namespace
+      if (moduleName === i18nConfig.common) {
+        if (i18nConfig.enableLogging) console.log(`✅ Loaded common messages from module: ${moduleName} (${locale})`)
+          return rawMessages
+      }
+      
       const builtMessages: Ti18nMessages = { [moduleName]: rawMessages }
+      console.log({ builtMessages })
 
       if (i18nConfig.enableLogging) console.log(`✅ Loaded messages for module: ${moduleName} (${locale})`)
 

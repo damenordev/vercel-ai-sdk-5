@@ -4,11 +4,11 @@ import { useTheme } from 'next-themes'
 
 import { useTranslations } from '@/i18n'
 
-import { Label, RadioGroup, RadioGroupItem } from '@/core/ui'
+import { Label, RadioGroup, RadioGroupItem } from '@/ui'
 
 export const SettingsTheme = () => {
   const { theme, setTheme } = useTheme()
-  const t = useTranslations('core.settingsDialog')
+  const t = useTranslations('settingsDialog')
   const themeOptions = [
     { value: 'light', label: t('theme.light'), icon: <Sun className="size-4" /> },
     { value: 'dark', label: t('theme.dark'), icon: <Moon className="size-4" /> },

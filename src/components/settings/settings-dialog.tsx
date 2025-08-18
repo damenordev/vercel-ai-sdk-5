@@ -8,7 +8,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, Di
 import { SettingsTheme } from './settings-theme'
 
 export const SettingsDialog = () => {
-  const t = useTranslations('core.settingsDialog')
+  const t = useTranslations('settingsDialog')
   return (
     <Dialog>
       <DialogTrigger asChild>
