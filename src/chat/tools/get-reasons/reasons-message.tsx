@@ -2,7 +2,8 @@
 import { useState } from 'react'
 import { Check } from 'lucide-react'
 
-import { Button } from '@/core/ui'
+import { Button } from '@/ui'
+
 import { useChatContext } from '../../provider'
 
 export interface IReasonsMessageProps {
